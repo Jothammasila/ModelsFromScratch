@@ -16,5 +16,4 @@ venv/
 
 # Data files
 data/
-*.csv
 *.json
