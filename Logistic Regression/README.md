@@ -14,3 +14,9 @@ This folder contains a Python implementation of Logistic Regression without usin
 1. Install dependencies:
    ```bash
    pip install -r requirements.txt
+
+## Mathematical Derivation
+The gradient derivation for logistic regression used in this project
+can be found in:
+
+Loss_function_and_Weights_Update_theory.pdf
