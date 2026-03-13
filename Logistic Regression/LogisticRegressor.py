@@ -1,5 +1,6 @@
 import numpy as np
 from normalization import Normalizer
+import matplotlib.pyplot as plt
 
 class LogisticRegressor:
 
@@ -30,15 +31,18 @@ class LogisticRegressor:
         self.weights = np.zeros(n_features)
         self.bias = 0
 
+        self.loss_history = []
+
         for i in range(self.num_iterations):
 
             linear_model = np.dot(X,self.weights)+self.bias
             y_pred = self.sigmoid(linear_model)
 
-            self.L = self.loss(y,y_pred)
+            self.L = self.loss(self.y_true, y_pred)
+            self.loss_history.append(self.L)
 
-            dw = (1/n_samples)*np.dot(X.T,(y_pred-y))
-            db = (1/n_samples)*np.sum(y_pred-y)
+            dw = (1/n_samples)*np.dot(X.T,(y_pred-self.y_true))
+            db = (1/n_samples)*np.sum(y_pred-self.y_true)
 
             self.weights -= self.learning_rate*dw
             self.bias -= self.learning_rate*db
@@ -51,6 +55,18 @@ class LogisticRegressor:
         y_pred = self.sigmoid(linear_model)
         return (y_pred>0.5).astype(int)
 
-    def parameter_summary(self):
+    def parameter_summary(self, show_loss=False):
         print(f"Weights: {self.weights}")
         print(f"Bias: {self.bias}")
+        
+        if show_loss:
+            if hasattr(self, "loss_history") and len(self.loss_history) > 0:
+                plt.figure(figsize=(8,5))
+                plt.plot(self.loss_history)
+                plt.xlabel("Iteration")
+                plt.ylabel("Loss")
+                plt.title("Training Loss Curve")
+                plt.grid(True)
+                plt.show()
+        else:
+            print("Loss history is empty. Train the model first.")
