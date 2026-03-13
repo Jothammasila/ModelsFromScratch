@@ -8,8 +8,6 @@ class LogisticRegressor:
         self.learning_rate = learning_rate
         self.normalizer = Normalizer()
         self.num_iterations = num_iterations
-        self.upper_bound = 1e12
-        self.lower_bound = -1e12
 
 # Activation function
     def sigmoid(self, z):
